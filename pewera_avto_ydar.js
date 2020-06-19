@@ -16,35 +16,34 @@ function t(){
 }
 t();
 
-function usePriem(){
-	/*
-	$.each($('iframe#main').contents().find('img'), function() {
-		if ( $(this).attr('scr') !== undefined && $(this).attr('src').indexOf('water_poison') !== -1 ) {
-			$('iframe#main').contents().find('[onClick=usepriem(10,1)]').trigger("click");
-
-
-			var priemNum = $(this).attr('onClick').replace('usepriem(','');
-			priemNum = +priemNum.replace(',1);','');
-			if (priemNum <=6) {
-				$(this).trigger("click");
-			}			
-			return false;
-		}
-	});
-	*/
-	$.each($('iframe#main').contents().find('a'), function() {
-		if ( $(this).attr('onClick') !== undefined && $(this).attr('onClick').indexOf('usepriem') !== -1 && $(this).attr('onClick').indexOf('100500') === -1) {
-			var priemNum = $(this).attr('onClick').replace('usepriem(','');
-			priemNum = +priemNum.replace(',1);','');
-			if (priemNum <=6) {
-				$(this).trigger("click");
-			}			
-			return false;
-		}
-	});
-}
-
 function bot() {
+	function usePriem(){
+		/*
+        $.each($('iframe#main').contents().find('img'), function() {
+            if ( $(this).attr('scr') !== undefined && $(this).attr('src').indexOf('water_poison') !== -1 ) {
+                $('iframe#main').contents().find('[onClick=usepriem(10,1)]').trigger("click");
+
+
+                var priemNum = $(this).attr('onClick').replace('usepriem(','');
+                priemNum = +priemNum.replace(',1);','');
+                if (priemNum <=6) {
+                    $(this).trigger("click");
+                }
+                return false;
+            }
+        });
+        */
+		$.each($('iframe#main').contents().find('a'), function() {
+			if ( $(this).attr('onClick') !== undefined && $(this).attr('onClick').indexOf('usepriem') !== -1 && $(this).attr('onClick').indexOf('100500') === -1) {
+				var priemNum = $(this).attr('onClick').replace('usepriem(','');
+				priemNum = +priemNum.replace(',1);','');
+				if (priemNum <=6) {
+					$(this).trigger("click");
+				}
+				return false;
+			}
+		});
+	}
 	function checkBattle() {
 		var updateButton = $('iframe#main').contents().find('div#ref_menu_down').find('button[name="reflesh_btn"]');
 		var backButton =  $('iframe#main').contents().find('div#ref_menu_down').find('button[name="back_menu_down"]');
