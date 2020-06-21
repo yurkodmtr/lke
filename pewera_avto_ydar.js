@@ -37,7 +37,7 @@ function bot() {
 			if ( $(this).attr('onClick') !== undefined && $(this).attr('onClick').indexOf('usepriem') !== -1 && $(this).attr('onClick').indexOf('100500') === -1) {
 				var priemNum = $(this).attr('onClick').replace('usepriem(','');
 				priemNum = +priemNum.replace(',1);','');
-				if (priemNum <=6) {
+				if (priemNum <=8) {
 					$(this).trigger("click");
 				}
 				return false;

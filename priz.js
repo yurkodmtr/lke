@@ -52,8 +52,8 @@ function goPrize() {
 		}
 	}
 
-	if (minutes == 19 || minutes == 39 || minutes == 59 || minutes == 9 || minutes == 29 || minutes == 49) {
-	//if (minutes == 29 || minutes == 9 || minutes == 49) {
+	//if (minutes == 19 || minutes == 39 || minutes == 59 || minutes == 9 || minutes == 29 || minutes == 49) {
+	if (minutes == 29 || minutes == 9 || minutes == 49) {
 		console.log('Ждём заявку, текущее время: ' + minutes + ":" + seconds);
 		clearInterval(interval);
 		interval = setInterval(function() {
