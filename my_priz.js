@@ -35,18 +35,46 @@ function pensiya(){
 function usePriem(){
 	var i = 0;
 	$.each($('iframe#main').contents().find('a'), function() {
-		if ( 
-			$(this).attr('onClick') !== undefined && $(this).attr('onClick').indexOf('usepriem') !== -1 && 
-			$(this).attr('onClick').indexOf('100500') === -1
-		) {
+		if ( $(this).attr('onClick') !== undefined && $(this).attr('onClick').indexOf('usepriem') !== -1 ) {
 			var priemNum = $(this).attr('onClick').replace('usepriem(','');
 			priemNum = +priemNum.replace(',1);','');
-			if (priemNum <= usePriemCount) {
+			if (priemNum <= usePriemCount || priemNum == '100500') {
 				console.log('юзаем прием');
 				i++;
 				$(this).trigger("click");
 				return false;				
 			}			
+		}
+	});	
+
+	$.each($('iframe#main').contents().find('#player1').find('img'), function() {
+		if ( ($(this).attr('src') !== undefined) && 
+				( 
+					$(this).attr('src').indexOf('/eff/wis_fire_flamming08') !== -1 || //пожирающее пламя
+					$(this).attr('src').indexOf('/eff/wis_water_cloud08') !== -1 || //ядовитое облако
+					$(this).attr('src').indexOf('/eff/wis_water_poison08') !== -1 || //отравление
+					$(this).attr('src').indexOf('/eff/wis_water_crystalize') !== -1 //кристализация
+			 	)
+			) {
+
+			var priemNum = usePriemCount+1;
+			$.each($('iframe#main').contents().find('a'), function() {
+				if ( $(this).attr('onClick') !== undefined && $(this).attr('onClick').indexOf('usepriem('+priemNum+',1);') !== -1 ) {
+					console.log('юзаем очистится');
+					i++;
+					$(this).trigger("click");			
+				}
+			});	
+			$.each($('iframe#main').contents().find('a'), function() {
+				if ( $(this).attr('onClick') !== undefined && $(this).attr('onClick').indexOf('usepriem('+(priemNum+1)+',1);') !== -1 ) {
+					console.log('юзаем призрачную магию');
+					i++;
+					$(this).trigger("click");		
+				}
+			});		
+			if ( i !== 0) {
+				return false;
+			}	
 		}
 	});	
 
@@ -59,6 +87,11 @@ function check() {
 
 	if ( $('#sd4win:visible').length > 0 ) {
 		alert('capcha');
+		clearInterval(interval);
+		interval = setInterval(function() {
+			check();
+		}, 10000);
+		return false;
 	}
 
 	pensiya();
