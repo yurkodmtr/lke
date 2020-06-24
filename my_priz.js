@@ -54,7 +54,8 @@ function usePriem(){
                     $(this).attr('src').indexOf('/eff/wis_fire_flamming08') !== -1 || //пожирающее пламя
                     $(this).attr('src').indexOf('/eff/wis_water_cloud08') !== -1 || //ядовитое облако
                     $(this).attr('src').indexOf('/eff/wis_water_poison08') !== -1 || //отравление
-                    $(this).attr('src').indexOf('/eff/wis_water_crystalize') !== -1 //кристализация
+                    $(this).attr('src').indexOf('/eff/wis_water_crystalize') !== -1 || //кристализация
+                    $(this).attr('src').indexOf('/eff/wis_water_shield') !== -1 // иней обморожение
                 )
             ) {
 
