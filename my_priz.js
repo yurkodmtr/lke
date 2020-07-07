@@ -20,8 +20,9 @@ function t(){
 }
 t();
 
-var usePriemCount = 8;
+var usePriemCount = 10;
 var useZver = false;
+var zalName = 'Зал Нейтралов';
 
 function pensiya(){
     if ( 
@@ -80,12 +81,37 @@ function usePriem(){
         }
     }); 
 
+    $.each($('iframe#main').contents().find('#player1').find('img'), function() {
+        if ( ($(this).attr('src') !== undefined) && 
+                ( 
+                    $(this).attr('src').indexOf('/eff/wis_water_frost08.gif') !== -1 //оледенение
+                )
+            ) {
+
+            var priemNum = usePriemCount+2;
+            $.each($('iframe#main').contents().find('a'), function() {
+                if ( $(this).attr('onClick') !== undefined && $(this).attr('onClick').indexOf('usepriem('+(priemNum)+',1);') !== -1 ) {
+                    console.log('юзаем призрачную магию');
+                    i++;
+                    $(this).trigger("click");       
+                }
+            });     
+            if ( i !== 0) {
+                return false;
+            }   
+        }
+    }); 
+
     if ( i === 0 ) {
         return 'disabled';
     }
 }
 
 function check() {
+
+    var goToHaotBtn = $('iframe#main').contents().find('a[href="main.php?zayvka=1&r=5&rnd=1"]');
+    var hitButton = $('iframe#main').contents().find('div#ref_menu_down').find('button[name="go_auto"]');
+    var updateButton = $('iframe#main').contents().find('div#ref_menu_down').find('button[name="reflesh_btn"]');
 
     if ( $('#sd4win:visible').length > 0 ) {
         alert('capcha');
@@ -96,10 +122,36 @@ function check() {
         return false;
     }
 
+    if (goToHaotBtn.length < 1 ) {
+        if ( hitButton.length < 1 && updateButton.length < 1 ) {
+            var img = $('iframe#main').contents().find('img[src="http://img.likebk.com/i/images/300x225/fl1.gif"]');
+
+            if ( img.length < 1 || img.attr('title').indexOf(zalName.toString()) === -1 ) {
+                console.log('не работаем');
+                clearInterval(interval);
+                interval = setInterval(function() {
+                    check();
+                }, 4000);
+                return false;
+            } 
+        }
+               
+    }
+
+    $.each($('iframe#main').contents().find('h1'), function() {
+        if ( $(this).indexOf('internal server error') !== -1) {
+            console.log('экран - internal server error - обновляем');
+            clearInterval(interval);
+            interval = setInterval(function() {
+                check();
+            }, 4000);
+            return false;        
+        }
+    });
+
     pensiya();
 
-    var hitButton = $('iframe#main').contents().find('div#ref_menu_down').find('button[name="go_auto"]');
-    var updateButton = $('iframe#main').contents().find('div#ref_menu_down').find('button[name="reflesh_btn"]');
+    
 
     if (hitButton.length > 0 && hitButton.css('display') != 'none') {
         console.log('проверяем приемы');
