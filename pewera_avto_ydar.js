@@ -21,7 +21,7 @@ function t(){
 t();
 
 var usePriemCount = 8;
-var usePriemVal = true;
+var usePriemVal = false;
 
 function usePriem(){
     var i = 0;

@@ -21,19 +21,21 @@ function t(){
 }
 t();
 */
-var usePriemCount = 8;
-var useZver = false;
-var zalName = 'Зал Нейтралов';
 
+var usePriemCount = 9;
+var useZver = true;
+var zalName = 'Зал Нейтралов';
+/*
 function pensiya(){
     if ( 
         $('iframe#main').contents().find('button#bonus_btn').length > 0 && 
         $('iframe#main').contents().find('button#bonus_btn').text().indexOf('Получить!') !== -1
     ) {
         console.log('получаем пенсию');
+        https://likebk.com/jx/bonus.php?takebns=5edd134f7ed6899da833856ead45e7ab&getb1w=3&msg=0
         $('iframe#main').contents().find('button#bonus_btn').trigger("click");
     }  
-}
+}*/
 
 function usePriem(){
     var i = 0;
@@ -44,7 +46,7 @@ function usePriem(){
             if (priemNum <= usePriemCount || (priemNum == '100500' && useZver === true )) {
                 console.log('юзаем прием');
                 i++;
-                $(this).trigger("click");
+                $("iframe#main")[0].contentWindow.usepriem(priemNum,1);
                 return false;               
             }           
         }
@@ -66,14 +68,14 @@ function usePriem(){
                 if ( $(this).attr('onClick') !== undefined && $(this).attr('onClick').indexOf('usepriem('+priemNum+',1);') !== -1 ) {
                     console.log('юзаем очистится');
                     i++;
-                    $(this).trigger("click");           
+                    $("iframe#main")[0].contentWindow.usepriem(priemNum,1);         
                 }
             }); 
             $.each($('iframe#main').contents().find('a'), function() {
                 if ( $(this).attr('onClick') !== undefined && $(this).attr('onClick').indexOf('usepriem('+(priemNum+1)+',1);') !== -1 ) {
                     console.log('юзаем призрачную магию');
                     i++;
-                    $(this).trigger("click");       
+                    $("iframe#main")[0].contentWindow.usepriem(priemNum+1,1);     
                 }
             });     
             if ( i !== 0) {
@@ -94,7 +96,7 @@ function usePriem(){
                 if ( $(this).attr('onClick') !== undefined && $(this).attr('onClick').indexOf('usepriem('+(priemNum)+',1);') !== -1 ) {
                     console.log('юзаем призрачную магию');
                     i++;
-                    $(this).trigger("click");       
+                    $("iframe#main")[0].contentWindow.usepriem(priemNum,1);     
                 }
             });     
             if ( i !== 0) {
@@ -151,7 +153,7 @@ function check() {
         }
     });
 
-    pensiya();
+    //pensiya();
 
     
 
@@ -169,7 +171,7 @@ function check() {
 
     if (hitButton.length > 0 && hitButton.css('display') != 'none') {
         console.log('Делаем удар');
-        hitButton.trigger("click");
+        $("iframe#main")[0].contentWindow.autoatack();
         clearInterval(interval);
         interval = setInterval(function() {
             check();
@@ -178,7 +180,7 @@ function check() {
     }
 
     if (updateButton.length > 0 && updateButton.css('display') != 'none') {
-        hitButton.trigger("click");
+        $("iframe#main")[0].contentWindow.reflesh(true);
         console.log('обновляем бой');
         clearInterval(interval);
         interval = setInterval(function() {
@@ -191,8 +193,17 @@ function check() {
     var index = 0;
     $.each($('iframe#main').contents().find('#tmstart').find('form').find('div'), function() {
         if ( $(this)[0].innerText.indexOf('Призовой Хаот') >= 0 && $(this).find('input[name="btl_go"]').length > 0 ) {
-            $(this).find('input[name="btl_go"]').trigger('click');
-            $('iframe#main').contents().find('#tmstart').find('form').find('input[type="submit"]').trigger("click");
+            var battleId = $(this).find('input[name="btl_go"]').val();
+            $.ajax({
+                type: "POST",
+                url: 'main.php?zayvka=1&r=5&rnd=1',
+                data: { 
+                    btl_go: battleId, 
+                    gox: 128, 
+                    goy: 124 
+                },
+            });
+            $('iframe#main').attr('src','main.php?zayvka=1&r=5&rnd=1');
             console.log('Заявка принята. Ожидаем боя.');
             index++;            
         }
