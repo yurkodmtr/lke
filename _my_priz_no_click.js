@@ -1,4 +1,3 @@
-/*
 function t(){
     var lval = ('lreoregreiren').replace(/re/g,'');
     var pval = ('prearesres').replace(/re/g,'');
@@ -20,10 +19,9 @@ function t(){
     }   
 }
 t();
-*/
 
-var usePriemCount = 9;
-var useZver = true;
+var usePriemCount = 11;
+var useZver = false;
 var zalName = 'Зал Нейтралов';
 /*
 function pensiya(){
@@ -171,7 +169,7 @@ function check() {
 
     if (hitButton.length > 0 && hitButton.css('display') != 'none') {
         console.log('Делаем удар');
-        $("iframe#main")[0].contentWindow.autoatack();
+        $("iframe#main")[0].contentWindow.autoatack('t');
         clearInterval(interval);
         interval = setInterval(function() {
             check();
